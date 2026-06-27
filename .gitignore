@@ -216,3 +216,7 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+#huggingface cache folder
+huggingface_cache
+huggingface_cache/
