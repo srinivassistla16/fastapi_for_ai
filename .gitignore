@@ -220,3 +220,6 @@ __marimo__/
 #huggingface cache folder
 huggingface_cache
 huggingface_cache/
+
+#sqlite database file
+chat_memory.db

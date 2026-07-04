@@ -35,3 +35,7 @@ accelerate
 
 # huggingface vector embeddings purpose
 sentence_transformers
+
+# Chatbot and SQLite Memory
+langchain-community
+sqlalchemy
