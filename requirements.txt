@@ -32,3 +32,6 @@ scikit-learn
 # adding below as i am seeing warning
 torch
 accelerate
+
+# huggingface vector embeddings purpose
+sentence_transformers

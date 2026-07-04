@@ -13,7 +13,7 @@ def do_simple_invoke_openai(simpleQuery: SimpleQuery):
     return {"model_response" : response.content}
 
 def do_simple_invoke_gemini(simpleQuery: SimpleQuery):
-    model = ChatGoogleGenerativeAI(model="gemini-3-flash-preview", temperature=0.1)
+    model = ChatGoogleGenerativeAI(model="gemini-3-flash-preview", temperature=1.9)
     query_str = simpleQuery.query_str
     response = model.invoke(query_str)
     return {"model_response" : response.content[0].get("text")}
@@ -28,5 +28,7 @@ def do_simple_invoke_huggingface(simpleQuery: SimpleQuery):
     ))
     model = ChatHuggingFace(llm=llm)
     query_str = simpleQuery.query_str
+    print("Before HF Invoke")
     response = model.invoke(query_str)
+    print(response.content)
     return {"model_response" : response.content}
