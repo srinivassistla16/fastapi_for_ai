@@ -5,7 +5,7 @@ from langchain_community.chat_message_histories import SQLChatMessageHistory
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.runnables.history import RunnableWithMessageHistory
 
-router = APIRouter(prefix="/api/chat", tags=["chatbot"])
+router = APIRouter()
 
 class ChatRequest(BaseModel):
     session_id: str
@@ -40,13 +40,13 @@ chain_with_history = RunnableWithMessageHistory(
     history_messages_key="history",
 )
 
-@router.post("/")
+@router.post("/api/chatbot/google")
 async def chat_endpoint(req: ChatRequest):
     try:
         response = chain_with_history.invoke(
             {"input": req.message},
             config={"configurable": {"session_id": req.session_id}}
         )
-        return {"response": response.content}
+        return {"model_response" : response.content[0].get("text")}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
