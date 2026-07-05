@@ -24,8 +24,10 @@ from general_00.routes import router as general_routes
 from embeddings_all_02.routes import router as embeddings_routers
 from prompting_all_003.routes import router as prompt_call_routers
 from chatbot_01.routes import router as chatbot_router
+from exception_handlers import add_exception_handlers
 
 app = FastAPI()
+add_exception_handlers(app)
 
 app.add_middleware(
     CORSMiddleware,

@@ -6,7 +6,7 @@ from models_all_01.model.prompt_query import SimpleQuery
 router = APIRouter()
 
 @router.post("/api/embeddings/openai/simplequery")
-def  simple_embeddings_call_openai (simpleQuery: SimpleQuery):
+def simple_embeddings_call_openai(simpleQuery: SimpleQuery):
     return do_simple_embeddings_call_openai(simpleQuery)
 
 @router.post("/api/embeddings/google/simplequery")
