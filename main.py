@@ -1,7 +1,16 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import os
 from dotenv import load_dotenv
+
+from models_all_01.routes import router as models_routers
+from general_00.routes import router as general_routes
+from embeddings_all_02.routes import router as embeddings_routers
+from prompting_all_003.routes import router as prompt_call_routers
+from chatbot_04.routes import router as chatbot_router
+from structured_output_all_05.routes import router as structured_output_router
+from output_parsers_all_06.routes import router as output_parsers_routers
+from exception_handlers import add_exception_handlers
 
 load_dotenv()
 
@@ -18,13 +27,6 @@ hf_home = os.getenv("HF_HOME")
 if hf_home:
     os.environ["HF_HOME"] = hf_home
 
-from models_all_01.routes import router as models_routers
-from general_00.routes import router as general_routes
-
-from embeddings_all_02.routes import router as embeddings_routers
-from prompting_all_003.routes import router as prompt_call_routers
-from chatbot_01.routes import router as chatbot_router
-from exception_handlers import add_exception_handlers
 
 app = FastAPI()
 add_exception_handlers(app)
@@ -42,10 +44,5 @@ app.include_router(models_routers)
 app.include_router(prompt_call_routers)
 app.include_router(embeddings_routers)
 app.include_router(chatbot_router)
-
-
-
-
-
-
-
+app.include_router(structured_output_router)
+app.include_router(output_parsers_routers)

@@ -5,11 +5,11 @@ from langchain_community.chat_message_histories import SQLChatMessageHistory
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.runnables.history import RunnableWithMessageHistory
 
+from chatbot_04.model.chat_request_model import ChatRequest
+
 router = APIRouter()
 
-class ChatRequest(BaseModel):
-    session_id: str
-    message: str
+
 
 # Use the Google Gemini model. GOOGLE_API_KEY is loaded from .env in main.py
 model = ChatGoogleGenerativeAI(model="gemini-3-flash-preview", temperature=1.9)
