@@ -39,3 +39,7 @@ sentence_transformers
 # Chatbot and SQLite Memory
 langchain-community
 sqlalchemy
+
+#document loaders
+PyPDF
+python-multipart

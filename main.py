@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import os
 from dotenv import load_dotenv
+from exception_handlers import add_exception_handlers
 
 from models_all_01.routes import router as models_routers
 from general_00.routes import router as general_routes
@@ -10,7 +11,12 @@ from prompting_all_003.routes import router as prompt_call_routers
 from chatbot_04.routes import router as chatbot_router
 from structured_output_all_05.routes import router as structured_output_router
 from output_parsers_all_06.routes import router as output_parsers_routers
-from exception_handlers import add_exception_handlers
+from chains_all_07.routes import router as chains_router
+from file_uploads.routes import  router as file_upload_router
+from document_loaders_all_08.routers import router as document_loader_router
+from text_splitter_09.routes import router as text_splitter_router
+
+
 
 load_dotenv()
 
@@ -46,3 +52,10 @@ app.include_router(embeddings_routers)
 app.include_router(chatbot_router)
 app.include_router(structured_output_router)
 app.include_router(output_parsers_routers)
+app.include_router(chains_router)
+app.include_router(file_upload_router)
+app.include_router(document_loader_router)
+app.include_router(text_splitter_router)
+
+
+
