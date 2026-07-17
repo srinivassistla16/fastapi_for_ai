@@ -43,3 +43,6 @@ sqlalchemy
 #document loaders
 PyPDF
 python-multipart
+
+#vector store chroma
+langchain-chroma

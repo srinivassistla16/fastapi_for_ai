@@ -13,9 +13,9 @@ from structured_output_all_05.routes import router as structured_output_router
 from output_parsers_all_06.routes import router as output_parsers_routers
 from chains_all_07.routes import router as chains_router
 from file_uploads.routes import  router as file_upload_router
-from document_loaders_all_08.routers import router as document_loader_router
+from document_loaders_all_08.routes import router as document_loader_router
 from text_splitter_09.routes import router as text_splitter_router
-
+from vector_store_all_10.routes import router as vector_store_router
 
 
 load_dotenv()
@@ -56,6 +56,8 @@ app.include_router(chains_router)
 app.include_router(file_upload_router)
 app.include_router(document_loader_router)
 app.include_router(text_splitter_router)
+app.include_router(vector_store_router)
+
 
 
 
