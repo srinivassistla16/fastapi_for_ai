@@ -16,7 +16,7 @@ from file_uploads.routes import  router as file_upload_router
 from document_loaders_all_08.routes import router as document_loader_router
 from text_splitter_09.routes import router as text_splitter_router
 from vector_store_all_10.routes import router as vector_store_router
-
+from retriever_all_11.routes import router as retriever_router
 
 load_dotenv()
 
@@ -57,7 +57,4 @@ app.include_router(file_upload_router)
 app.include_router(document_loader_router)
 app.include_router(text_splitter_router)
 app.include_router(vector_store_router)
-
-
-
-
+app.include_router(retriever_router)

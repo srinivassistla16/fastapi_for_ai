@@ -39,6 +39,7 @@ sentence_transformers
 # Chatbot and SQLite Memory
 langchain-community
 sqlalchemy
+langgraph
 
 #document loaders
 PyPDF
@@ -46,3 +47,6 @@ python-multipart
 
 #vector store chroma
 langchain-chroma
+
+#retriever
+wikipedia

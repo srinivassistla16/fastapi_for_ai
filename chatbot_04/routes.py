@@ -1,4 +1,5 @@
 from fastapi import APIRouter, HTTPException
+from langchain_core.messages import HumanMessage
 from pydantic import BaseModel
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_community.chat_message_histories import SQLChatMessageHistory
@@ -6,6 +7,9 @@ from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.runnables.history import RunnableWithMessageHistory
 
 from chatbot_04.model.chat_request_model import ChatRequest
+
+from langgraph.checkpoint.memory import MemorySaver
+from langgraph.graph import START, MessagesState, StateGraph
 
 router = APIRouter()
 
@@ -40,7 +44,7 @@ chain_with_history = RunnableWithMessageHistory(
     history_messages_key="history",
 )
 
-@router.post("/api/chatbot/google")
+@router.post("/api/chatbot/langchain")
 async def chat_endpoint(req: ChatRequest):
     try:
         response = chain_with_history.invoke(
@@ -50,3 +54,35 @@ async def chat_endpoint(req: ChatRequest):
         return {"model_response" : response.content[0].get("text")}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+############################################################
+
+# --- LangGraph Setup ---
+def call_model(state: MessagesState):
+    response = model.invoke(state["messages"])
+    return {"messages": [response]} # Append the new message to state
+
+builder = StateGraph(MessagesState)
+builder.add_node("model", call_model)
+builder.add_edge(START, "model")
+
+memory = MemorySaver()
+graph = builder.compile(checkpointer=memory)
+
+@router.post("/api/chatbot/langgraph")
+async def chat_endpoint(req: ChatRequest):
+    try:
+        config = {"configurable": {"thread_id": req.session_id}}
+        # Invoke the graph synchronously (or use await graph.ainvoke)
+        # We pass the input structured for MessagesState
+        final_state = graph.invoke(
+            {"messages": [HumanMessage(content=req.message)]}, 
+            config=config
+        )
+        # Extract the last message from the updated MessagesState array
+        last_message = final_state["messages"][-1]
+        return {"model_response" : last_message.content[0].get('text')}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+ 
+
+
